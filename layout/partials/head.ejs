@@ -22,11 +22,13 @@
             </title>
             <meta content="width=device-width, initial-scale=1" name="viewport">
             <meta name="theme-color" content="#4184f3">
+            
+            <!-- Favicon -->
+            <link rel="icon" type="image/x-icon" href="<%- url_for('/favicon.ico') %>">
+            <link rel="icon" type="image/png" href="<%- url_for('/favicon.png') %>">
+            
             <% if (theme.rss){ %>
             <link href="<%- theme.rss %>" rel="alternate" title="<%= config.title %>" type="application/atom+xml"/>
-            <% } %>
-            <% if (theme.favicon){ %>
-            <link href="<%- theme.favicon %>" rel="icon"/>
             <% } %>
 
             <%- css('css/highlight.light') %>

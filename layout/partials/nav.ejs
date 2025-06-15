@@ -5,29 +5,25 @@
 <% }%>
     <div class="container">
         <nav>
-            <div class="logo wave">
-                <a href="<%- url_for() %>" id="logo">
+            <div class="logo">
+                <a href="<%- url_for() %>" id="logo" class="nav-logo">
+                    <img src="<%- url_for('/logo.png') %>" alt="logo" class="site-logo">
                     <%= config.title %>
                 </a>
             </div>
             <div class="nav-toggle-icon" >
                 <div class="material-hamburger">
-                    <span>
-                    </span>
-                    <span>
-                    </span>
-                    <span>
-                    </span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
             <div class="menu-wrapper">
-                <div class="nav-indicator">
-                </div>
                 <ul class="menus">
                     <%if(is_home()&&theme.active_nav){%>
                      <% for (var i in theme.menu){ %>
                         <li class="<%if(i=='home'){%>active<%}%>">
-                            <a class="<%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
+                            <a class="nav-link <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
                                 <%-  __(i) %>
                             </a>
                         </li>
@@ -35,7 +31,7 @@
                     <%}else if(is_category()&&theme.active_nav){%>
                      <% for (var i in theme.menu){ %>
                         <li class="<%if(i=='categories'){%>active<%}%>">
-                            <a class="wave <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
+                            <a class="nav-link <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
                                 <%-  __(i) %>
                             </a>
                         </li>
@@ -43,7 +39,7 @@
                     <%}else if(is_archive()&&theme.active_nav){%>
                      <% for (var i in theme.menu){ %>
                         <li class="<%if(i=='archives'){%>active<%}%>">
-                            <a class="wave <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
+                            <a class="nav-link <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
                                 <%-  __(i) %>
                             </a>
                         </li>
@@ -51,7 +47,7 @@
                     <%}else if(page.layout=='about'&&theme.active_nav){%>
                      <% for (var i in theme.menu){ %>
                         <li class="<%if(i=='about'){%>active<%}%>">
-                            <a class="wave <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
+                            <a class="nav-link <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
                                 <%-  __(i) %>
                             </a>
                         </li>
@@ -59,15 +55,127 @@
                     <%}else{%>
                      <% for (var i in theme.menu){ %>
                         <li>
-                            <a class="wave <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
+                            <a class="nav-link <%if(i=='rss'){%>no-smoothstate<%}%>" href="<%- url_for(theme.menu[i]) %>">
                                 <%-  __(i) %>
                             </a>
                         </li>
                      <% } %>
                     <%}%>
-                   
                 </ul>
             </div>
         </nav>
     </div>
 </div>
+
+<style>
+.nav-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.site-logo {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.menu-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.menus {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menus li {
+    margin: 0 1rem;
+}
+
+.menus li a {
+    color: #333 !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.menus li a:hover {
+    color: #0066cc !important;
+}
+
+.menus li.active a {
+    color: #0066cc !important;
+}
+
+.menus li.active a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #0066cc;
+}
+
+@media (max-width: 768px) {
+    .menu-wrapper {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 1rem 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .menu-wrapper.active {
+        transform: translateY(0);
+    }
+
+    .menus {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menus li {
+        margin: 0.5rem 0;
+    }
+
+    .menus li a {
+        display: block;
+        padding: 0.5rem 1rem;
+    }
+}
+</style>
